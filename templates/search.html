@@ -1,0 +1,64 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+
+{% block title %}
+    <title>博客首页</title>
+{% endblock %}
+{% block headInfo %}
+    <div class="blog-header">
+        <h1 class="blog-title">Search <span style="color: #1b9dec">{% if search_keyword != '' %}"__{{ search_keyword }}"{% endif %}</span></h1>
+        <hr>
+    </div>
+{% endblock %}
+{% block col-8 %}
+    <div class="col-md-8">
+        <div class="col-md-12">
+            <div class="blog-post">
+                {% for tag in all_tags %}
+                <a href="{% url 'tag' %}?tag={{ tag.id }}" class="label-2"><span class="label label-default">{{ tag.tag }}</span></a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-12">
+            {% for art in articles.object_list %}
+            <div class="col-md-12">
+                <div class="blog-post">
+                    <h2 class="blog-post-title"><a href="{% url 'art' art.id %}">{{ art.title }}</a></h2>
+                    <p class="blog-post-meta">{{ art.date }} by <a href="#">{{ art.author }}</a></p>
+                    <hr>
+                    <p>{{ art.overView }}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% if articles.object_list %}
+            <div class="col-md-12">
+                <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="{% if articles.has_previous %}{% else %}disabled{% endif %}" >
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for page in articles.pages %}
+                        {% if page %}
+                            {% ifequal page all_orgs.number %}
+                                 <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                             {% else %}
+                                 <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                             {% endifequal %}
+                        {% else %}
+                             <li class="none"><a href="">...</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="{% if articles.has_next %}{% else %}disabled{% endif %}">
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

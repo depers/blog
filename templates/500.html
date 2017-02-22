@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <title>500</title>
+    <link rel="icon" href="{% static 'images/fav.png' %}" mce_href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/fav.png' %}" mce_href="/favicon.ico" type="image/x-icon">
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body style="background-color: #eee">
+
+    <div class="jumbotron error">
+        <div class="container">
+            <img src="{% static 'images/Expression_10.png' %}" alt="">
+            <h1>500 Internal Server Error</h1>
+            <p>请点击下面的按钮返回博客首页。</p>
+            <p><a class="btn btn-primary btn-lg" href="{% url 'index' %}" role="button">返回博客首页</a></p>
+        </div>
+
+    </div>
+</body>
+</html>

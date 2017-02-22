@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title%}{% endblock %}
+    <link rel="icon" href="{% static 'images/fav.png' %}" mce_href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'images/fav.png' %}" mce_href="/favicon.ico" type="image/x-icon">
+    <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">FengXiao</a>
+            </div>
+            <div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="button" id='search' class="btn btn-default">Submit</button>
+                </form>
+                    <ul class="nav navbar-nav navbar-right">
+                    <li class="{% if request.path|slice:'11' == '/blog/Home/' %}active{% endif %}">
+                        <a href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="{% if request.path|slice:'14' == '/blog/Archive/' %}active{% endif %}">
+                        <a href="{% url 'archive' %}">Archive</a>
+                    </li>
+                    <li class="{% if request.path|slice:'11' == '/blog/Tags/' %}active{% endif %}">
+                        <a href="{% url 'tag' %}">Tags</a>
+                    </li>
+                    <li class="{% if request.path|slice:'12' == '/blog/About/' %}active{% endif %}">
+                        <a href="{% url 'about' %}">About</a>
+                    </li>
+                    <li class="{% if request.path|slice:'14' == '/blog/Friends/' %}active{% endif %}">
+                        <a href="{% url 'friends' %}">Friends</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        {% block headInfo %}
+        {% endblock %}
+        <div class="row">
+            {% block col-8 %}
+            {% endblock %}
+            {% block col-4 %}
+            <div class="col-md-4">
+                <div>
+                    <img src="{{ MEDIA_URL }}{{ user.image }}" alt="" class="img-rounded center-block avatar">
+                    <h5 class="name">FengXiao</h5>
+                </div>
+                <div class="row link">
+                    <div class="col col-2">
+                            <a href="https://github.com/depers"><img src="{% static 'images/github.png' %}" alt=""></a>
+                    </div>
+                    <div class="col">
+                        <a href="https://www.zhihu.com/people/xiao-depers/activities"><img src="{% static 'images/zhihu.png' %}" alt=""></a>
+                    </div>
+                    <div class="col">
+                        <a href="http://weibo.com/2880197701/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1"><img src="{% static 'images/sina.png' %}" alt=""></a>
+                    </div>
+                    <div class="col col-2">
+                        <a href=""><img src="{% static 'images/rss.png' %}" alt=""></a>
+                    </div>
+                </div>
+                <div class="panel panel-default tags">
+                    <div class="panel-body">
+                        热门文章
+                    </div>
+                    <div class="panel-content">
+                        {% for art in hotarts %}
+                        <p class="art"><a href="{% url 'art' art.id %}">{{ art.title}}</a></p>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="panel panel-default tags">
+                <div class="panel-body">
+                    Tags
+                </div>
+                <div class="panel-content">
+                    {% for tag in tags %}
+                    <p class="tag"><a href="{% url 'tag' %}?tag={{ tag.id }}">{{ tag.tag }}</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="panel panel-default tags">
+                <div class="panel-body">
+                    打赏支持
+                </div>
+                <div class="panel-content">
+                    <p class="art-2">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果觉得我的文章对您所有帮助，请随意打赏，或者分享转发给更多朋友。您的支持与认可，将使我更加坚持不懈地创作，谢谢您！
+                    </p>
+                    <img src="{% static 'images/money.png' %}" alt="" class="center-block">
+                </div>
+            </div>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="toe">
+                <img src="{% static 'images/ghost_gif_4.gif' %}" alt="" class="center-block">
+                <p>Copyright © FengXiao 2017 | Powered by Django with Bootstrap3</p>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+</body>
+</html>

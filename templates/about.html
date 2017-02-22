@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% load staticfiles %}
+
+{% block title %}
+    <title>关于我</title>
+{% endblock %}
+{% block headInfo %}
+    <div class="blog-header">
+        <h1 class="blog-title">About Me</h1>
+        <hr>
+    </div>
+{% endblock %}
+{% block col-8 %}
+    <div class="col-md-8">
+        <div class="col-md-12">
+            {% autoescape off %}
+            {{ content.content }}
+            {% endautoescape %}
+        </div>
+    </div>
+{% endblock %}

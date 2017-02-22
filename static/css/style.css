@@ -1,0 +1,143 @@
+.blog-post-title a{
+    color: #000;
+    text-decoration: none;
+}
+.blog-post-title a:hover{
+    color: #337ab7;
+}
+.avatar{
+    width: 55%;
+}
+.name{
+    text-align: center;
+}
+.link img{
+    width: 10%;
+}
+.col-2 img{
+    width:9%;
+}
+.link{
+    text-align: center;
+}
+.col{
+    display: inline;
+    padding-right: 5px;
+}
+.tags{
+    width:85%;
+    margin-left: 7.5%;
+    margin-top: 7%;
+    border: none;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.11);
+}
+.panel-body{
+    padding: 7px;
+    background: #e7e7e7;
+    color: #000;
+    border-radius: 3px;
+}
+.tags p.tag a{
+    display: inline-block;
+    padding: 3px;
+    border-radius: 7px;
+    background: #f8f8f8;
+}
+.tags p.tag{
+    display: inline-block;
+}
+.panel-content{
+    padding: 10px;
+}
+.tags p a{
+    color: #000;
+    text-decoration: none;
+}
+.tags p.tag a:hover {
+    background: #4078c0;
+    color: #fff;
+}
+.tags p.art{
+    display: block;
+}
+.tags p.art{
+    background: #ffffff;
+    padding: 0;
+}
+.tags p.art a:hover{
+    color: #337ab7;
+}
+.tags p.art{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.panel-content img{
+    width:85%;
+}
+.tags p.art-2{
+    background: #ffffff;
+    padding: 0;
+}
+.footer{
+    background-color: #f8f8f8;
+    /*border-color: #e7e7e7;*/
+    min-height: 100px;
+    border: 1px solid transparent;
+    margin-top: 20px;
+}
+.toe img{
+    margin-top: 10px;
+    width: 70px;
+}
+.toe{
+    text-align: center;
+}
+/* archive.html*/
+.badge-2{
+    margin-left: 10px;
+    background-color: rgba(119, 119, 119, 0.18);
+}
+.overView{
+    font-family: "微软雅黑";
+}
+/*tags.html*/
+.label-2{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+.label-2 span{
+    background-color: #c7c6c6;
+}
+.label-2:hover{
+    text-decoration: none;
+}
+.label-2 span:hover{
+    text-decoration: none;
+    color: #828282;
+}
+.label-active span{
+    text-decoration: none;
+    color: #828282;
+}
+/*article.html*/
+.nav-pills{
+    position: fixed;
+    margin-left: 3%;
+    margin-top: 2%;
+}
+.nav-pills>li>a:hover{
+    background: none;
+    font-weight: bold;
+}
+.nav-pills>li.active>a:hover, .nav-pills>li.active>a:focus, .nav-pills>li.active>a{
+    color: #337ab7;
+    background: none;
+    font-weight: bold;
+}
+.li-1{
+    font-weight: bold;
+}
+.nav-pills>li>a{
+    padding: 5px 15px;
+}
