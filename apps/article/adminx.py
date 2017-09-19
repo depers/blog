@@ -2,7 +2,7 @@
 __author__ = 'fengxiao'
 __date__ = '2017/2/18 18:21'
 import xadmin
-from models import Article, HeadInfo, pageInfo, PassArticle, PassedArticle, Tags
+from models import Article, HeadInfo, pageInfo, PassArticle, PassedArticle, Tags, Column
 from xadmin import views
 
 
@@ -24,6 +24,7 @@ class ArticleAdmin(object):
     model_icon = 'fa fa-eyedropper'
     exclude = ['passed']
     style_fields = {"garagraph": "ueditor"}
+
 
 
 class PassArticleAdmin(object):
@@ -74,10 +75,20 @@ class PageInfoAmdin(object):
 
 
 class TagsAmdin(object):
-    list_display = ['tag', 'chickRate', 'date']
+    list_display = ['tag', 'chickRate', 'get_art_nums', 'date']
     search_fields = ['tag']
     list_filter = ['tag', 'chickRate', 'date']
     model_icon = 'fa fa-bookmark'
+    # relfield_style = 'fk-ajax'
+
+
+class ColumnAdmin(object):
+    list_display = ['name', 'get_art_nums', 'date']
+    search_fields = ['name']
+    list_filter = ['name', 'date']
+    module_icon = 'fa fa-archive'
+    ordering = ['date']
+    # relfield_style = 'fk-ajax'
 
 xadmin.site.register(Article, ArticleAdmin)
 xadmin.site.register(PassArticle, PassArticleAdmin)
@@ -85,6 +96,7 @@ xadmin.site.register(PassedArticle, PassedArticleAdmin)
 xadmin.site.register(HeadInfo, HeadInfoAdmin)
 xadmin.site.register(pageInfo, PageInfoAmdin)
 xadmin.site.register(Tags, TagsAmdin)
+xadmin.site.register(Column, ColumnAdmin)
 
 xadmin.site.register(views.BaseAdminView, BaseSetting)
 xadmin.site.register(views.CommAdminView, GlobalSettings)

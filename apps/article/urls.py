@@ -19,6 +19,5 @@ urlpatterns = [
 
     url(r'^Friends/$', Friend.as_view(), name='friends'),
 
-
     url(r'^Search/$', Search.as_view(), name='search'),
 ]

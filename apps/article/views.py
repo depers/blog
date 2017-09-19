@@ -6,7 +6,7 @@ from django.views.generic import View
 from django.db.models import Q
 from pure_pagination import Paginator, PageNotAnInteger
 
-from models import Article, HeadInfo, Tags, pageInfo
+from models import Article, HeadInfo, Tags, pageInfo, Column
 from users.models import UserProfile
 
 
@@ -14,6 +14,7 @@ class ArtHome(View):
 
     def get(self, request):
         article = Article.objects.filter(passed=True).order_by('-date')
+        columns = Column.objects.all().order_by('date')
         headInfo = HeadInfo.objects.all().order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
         tags = Tags.objects.all().order_by('-chickRate')[:25]
@@ -35,11 +36,38 @@ class ArtHome(View):
             'hotarts': hotArts,
             'headInfo': headInfo,
             'tags': tags,
-            'user': user
+            'user': user,
+            'columns': columns
         })
 
 
 class Archive(View):
+    def get(self, request):
+        article = Article.objects.filter(passed=True).order_by('-date')
+        hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
+        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        user = UserProfile.objects.get(username='fengxiao')
+        artNum = article.all().count()
+
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        # Provide Paginator with the request object for complete querystring generation
+
+        p = Paginator(article, 7, request=request)
+        articles = p.page(page)
+
+        return render(request, 'archive.html', {
+            'articles': articles,
+            'hotarts': hotArts,
+            'tags': tags,
+            'user': user,
+            'num': artNum,
+        })
+
+class Columns(View):
     def get(self, request):
         article = Article.objects.filter(passed=True).order_by('-date')
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
@@ -73,6 +101,8 @@ class Tag(View):
         if tag:
             article = Article.objects.filter(passed=True, tags=int(tag)).order_by('-date')
             tag = Tags.objects.get(id=int(tag))
+            tag.chickRate += 1
+            tag.save()
         else:
             article = Article.objects.filter(passed=True).order_by('-date')
 
@@ -104,7 +134,12 @@ class Tag(View):
 class Art(View):
     def get(self, request, art_id):
         art = Article.objects.get(id=art_id)
-        tag = Tags.objects.get(id=art.tags_id)
+        art.chickRate += 1
+        art.save()
+        if art.tags_id:
+            tag = Tags.objects.get(id=art.tags_id)
+        else:
+            tag = None
         graTitle = art.garTitle
         href = graTitle.replace('、', '-').split("  ")
         gra_title = graTitle.split("  ")

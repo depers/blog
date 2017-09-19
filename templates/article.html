@@ -60,15 +60,15 @@
 <div class="container">
     <div class="blog-header">
         <h1 class="blog-title">{{ art.title }}
-            <span class="badge badge-2">{{ art.tags }}</span>
-            <span class="badge badge-2">{{ art.tags.tag_2 }}</span>
-            <span class="badge badge-2">{{ art.tags.tag_3 }}</span>
+            <span class="badge badge-2">{% if tags %}{{ tags.tag }}{% endif %}</span>
+            <span class="badge badge-2">{% if tags %}{{ tags.tag_2 }}{% endif %}</span>
+            <span class="badge badge-2">{% if tags %}{{ tags.tag_3 }}{% endif %}</span>
         </h1>
         <h4 class="blog-post-meta"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>&nbsp;&nbsp;{{ art.date }} by <a>{{ art.author }}</a></h4>
         <hr>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9">
             <div class="col-md-12">
                 <div class="blog-post">
                     {% autoescape off %}
@@ -77,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 src-list" id="myScrollspy">
+        <div class="col-md-3 src-list" id="myScrollspy">
             <ul class="nav nav-pills nav-stacked" role="tablist">
                 <li class="li">CATALOG</li>
                 <hr>

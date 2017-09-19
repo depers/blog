@@ -84,6 +84,16 @@
                 </div>
                 <div class="panel panel-default tags">
                     <div class="panel-body">
+                        博客专栏
+                    </div>
+                    <div class="panel-content">
+                        {% for column in columns %}
+                        <p class="art"><a href="{% url 'art' column.id %}">{{ column.name}}</a></p>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="panel panel-default tags">
+                    <div class="panel-body">
                         热门文章
                     </div>
                     <div class="panel-content">
