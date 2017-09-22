@@ -40,8 +40,8 @@
                     <li class="{% if request.path|slice:'11' == '/blog/Home/' %}active{% endif %}">
                         <a href="{% url 'index' %}">Home</a>
                     </li>
-                    <li class="{% if request.path|slice:'14' == '/blog/Archive/' %}active{% endif %}">
-                        <a href="{% url 'archive' %}">Archive</a>
+                    <li class="{% if request.path|slice:'14' == '/blog/Columns/' %}active{% endif %}">
+                        <a href="{% url 'column' %}">Column</a>
                     </li>
                     <li class="{% if request.path|slice:'11' == '/blog/Tags/' %}active{% endif %}">
                         <a href="{% url 'tag' %}">Tags</a>
@@ -88,13 +88,13 @@
                     </div>
                     <div class="panel-content">
                         {% for column in columns %}
-                        <p class="art"><a href="{% url 'art' column.id %}">{{ column.name}}</a></p>
+                        <p class="art"><a href="{% url 'colArticle' column.id %}">{{ column.name}}</a></p>
                         {% endfor %}
                     </div>
                 </div>
                 <div class="panel panel-default tags">
                     <div class="panel-body">
-                        热门文章
+                        出彩文章
                     </div>
                     <div class="panel-content">
                         {% for art in hotarts %}
@@ -104,26 +104,26 @@
                 </div>
 
                 <div class="panel panel-default tags">
-                <div class="panel-body">
-                    Tags
+                    <div class="panel-body">
+                        热门标签
+                    </div>
+                    <div class="panel-content">
+                        {% for tag in tags %}
+                        <p class="tag"><a href="{% url 'tag' %}?tag={{ tag.id }}">{{ tag.tag }}</a></p>
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="panel-content">
-                    {% for tag in tags %}
-                    <p class="tag"><a href="{% url 'tag' %}?tag={{ tag.id }}">{{ tag.tag }}</a></p>
-                    {% endfor %}
+                <div class="panel panel-default tags">
+                    <div class="panel-body">
+                        打赏支持
+                    </div>
+                    <div class="panel-content">
+                        <p class="art-2">
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果觉得我的文章对您所有帮助，请随意打赏，或者分享转发给更多朋友。您的支持与认可，将使我更加坚持不懈地创作，谢谢您！
+                        </p>
+                        <img src="{% static 'images/money.png' %}" alt="" class="center-block">
+                    </div>
                 </div>
-            </div>
-            <div class="panel panel-default tags">
-                <div class="panel-body">
-                    打赏支持
-                </div>
-                <div class="panel-content">
-                    <p class="art-2">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果觉得我的文章对您所有帮助，请随意打赏，或者分享转发给更多朋友。您的支持与认可，将使我更加坚持不懈地创作，谢谢您！
-                    </p>
-                    <img src="{% static 'images/money.png' %}" alt="" class="center-block">
-                </div>
-            </div>
             </div>
             {% endblock %}
         </div>
@@ -137,9 +137,6 @@
         </div>
 
     </div>
-
-
-
 
 </body>
 </html>

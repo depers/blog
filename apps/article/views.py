@@ -15,7 +15,7 @@ class ArtHome(View):
     def get(self, request):
         article = Article.objects.filter(passed=True).order_by('-date')
         columns = Column.objects.all().order_by('date')
-        headInfo = HeadInfo.objects.all().order_by('-date')[0]
+        headInfo = HeadInfo.objects.filter(page='home').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
         tags = Tags.objects.all().order_by('-chickRate')[:25]
         user = UserProfile.objects.get(username='fengxiao')
@@ -28,7 +28,7 @@ class ArtHome(View):
 
         # Provide Paginator with the request object for complete querystring generation
 
-        p = Paginator(article, 7, request=request)
+        p = Paginator(article, 10, request=request)
         articles = p.page(page)
 
         return render(request, 'index.html', {
@@ -40,36 +40,44 @@ class ArtHome(View):
             'columns': columns
         })
 
-
-class Archive(View):
-    def get(self, request):
-        article = Article.objects.filter(passed=True).order_by('-date')
-        hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
-        tags = Tags.objects.all().order_by('-chickRate')[:25]
-        user = UserProfile.objects.get(username='fengxiao')
-        artNum = article.all().count()
-
-        try:
-            page = request.GET.get('page', 1)
-        except PageNotAnInteger:
-            page = 1
-
-        # Provide Paginator with the request object for complete querystring generation
-
-        p = Paginator(article, 7, request=request)
-        articles = p.page(page)
-
-        return render(request, 'archive.html', {
-            'articles': articles,
-            'hotarts': hotArts,
-            'tags': tags,
-            'user': user,
-            'num': artNum,
-        })
-
 class Columns(View):
     def get(self, request):
-        article = Article.objects.filter(passed=True).order_by('-date')
+        columns = Column.objects.all().order_by('date')
+        columnsAll = Column.objects.all().order_by('-date')
+        headInfo = HeadInfo.objects.filter(page='column').order_by('-date')
+        if headInfo:
+            headInfo = HeadInfo.objects.filter(page='column').order_by('-date')[0]
+        hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
+        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        user = UserProfile.objects.get(username='fengxiao')
+        artNum = columns.all().count()
+
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        # Provide Paginator with the request object for complete querystring generation
+
+        p = Paginator(columnsAll, 10, request=request)
+        columnsAll = p.page(page)
+
+        return render(request, 'column.html', {
+            'hotarts': hotArts,
+            'headInfo': headInfo,
+            'tags': tags,
+            'user': user,
+            'num': artNum,
+            'columns': columns,
+            'columnList': columnsAll
+        })
+
+
+class ColumnArticle(View):
+    def get(self, request, cId):
+        article = Article.objects.filter(column_id=cId).order_by('-date')
+        columns = Column.objects.all().order_by('date')
+        column = Column.objects.get(id=cId)
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
         tags = Tags.objects.all().order_by('-chickRate')[:25]
         user = UserProfile.objects.get(username='fengxiao')
@@ -82,15 +90,17 @@ class Columns(View):
 
         # Provide Paginator with the request object for complete querystring generation
 
-        p = Paginator(article, 7, request=request)
+        p = Paginator(article, 10, request=request)
         articles = p.page(page)
 
-        return render(request, 'archive.html', {
+        return render(request, 'colarticle.html', {
             'articles': articles,
             'hotarts': hotArts,
             'tags': tags,
             'user': user,
             'num': artNum,
+            'columns': columns,
+            'column': column
         })
 
 
@@ -105,8 +115,11 @@ class Tag(View):
             tag.save()
         else:
             article = Article.objects.filter(passed=True).order_by('-date')
-
+        headInfo = HeadInfo.objects.filter(page='tags').order_by('-date')
+        if headInfo:
+            headInfo = HeadInfo.objects.filter(page='column').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
+        columns = Column.objects.all().order_by('date')
         tags = Tags.objects.all().order_by('-chickRate')[:25]
         user = UserProfile.objects.get(username='fengxiao')
         artNum = article.all().count()
@@ -118,16 +131,18 @@ class Tag(View):
 
         # Provide Paginator with the request object for complete querystring generation
 
-        p = Paginator(article, 7, request=request)
+        p = Paginator(article, 10, request=request)
         articles = p.page(page)
 
         return render(request, 'tags.html', {
             'tagc': tag,
             'articles': articles,
             'hotarts': hotArts,
+            'headInfo': headInfo,
             'tags': tags,
             'user': user,
             'num': artNum,
+            'columns': columns
         })
 
 
@@ -136,19 +151,11 @@ class Art(View):
         art = Article.objects.get(id=art_id)
         art.chickRate += 1
         art.save()
-        if art.tags_id:
-            tag = Tags.objects.get(id=art.tags_id)
-        else:
-            tag = None
-        graTitle = art.garTitle
-        href = graTitle.replace('、', '-').split("  ")
-        gra_title = graTitle.split("  ")
+        tags = Tags.objects.filter(art_id=art_id)
 
         return render(request, 'article.html', {
             'art': art,
-            'tags': tag,
-            'gra_title': gra_title,
-            'href': href,
+            'tags': tags,
         })
 
 
@@ -157,15 +164,21 @@ class About(View):
         content = pageInfo.objects.filter(type='about').order_by('-date')
         if content:
             content = pageInfo.objects.filter(type='about').order_by('-date')[0]
+        headInfo = HeadInfo.objects.filter(page='about').order_by('-date')
+        if headInfo:
+            headInfo = HeadInfo.objects.filter(page='column').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
+        columns = Column.objects.all().order_by('date')
         tags = Tags.objects.all().order_by('-chickRate')[:25]
         user = UserProfile.objects.get(username='fengxiao')
 
         return render(request, 'about.html', {
             'hotarts': hotArts,
             'tags': tags,
+            'headInfo': headInfo,
             'user': user,
-            'content': content
+            'content': content,
+            'columns': columns
         })
 
 
@@ -174,15 +187,21 @@ class Friend(View):
         content = pageInfo.objects.filter(type='friends').order_by('-date')
         if content:
             content = pageInfo.objects.filter(type='friends').order_by('-date')[0]
+        headInfo = HeadInfo.objects.filter(page='friends').order_by('-date')
+        if headInfo:
+            headInfo = HeadInfo.objects.filter(page='column').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
+        columns = Column.objects.all().order_by('date')
         tags = Tags.objects.all().order_by('-chickRate')[:25]
         user = UserProfile.objects.get(username='fengxiao')
 
         return render(request, 'friend.html', {
             'hotarts': hotArts,
             'tags': tags,
+            'headInfo': headInfo,
             'user': user,
-            'content': content
+            'content': content,
+            'columns': columns
         })
 
 
@@ -192,14 +211,14 @@ class Search(View):
         all_arts = []
         search_keyword = ''
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
+        columns = Column.objects.all().order_by('date')
         tags = Tags.objects.all().order_by('-chickRate')[:25]
         user = UserProfile.objects.get(username='fengxiao')
 
         search_keyword = request.GET.get('keywords', '')
         if search_keyword:
-            all_arts = Article.objects.filter(Q(title__icontains=search_keyword)|Q(tags__tag__icontains=search_keyword)
-                                              |Q(tags__tag_2__icontains=search_keyword)|Q(tags__tag_3__icontains=search_keyword)
-                                              |Q(garTitle__icontains=search_keyword)|Q(overView__icontains=search_keyword))
+            all_arts = Article.objects.filter(Q(title__icontains=search_keyword)|
+                        Q(overView__icontains=search_keyword))
             all_tags = Tags.objects.filter(Q(tag__icontains=search_keyword))
 
         try:
@@ -209,7 +228,7 @@ class Search(View):
 
         # Provide Paginator with the request object for complete querystring generation
 
-        p = Paginator(all_arts, 7, request=request)
+        p = Paginator(all_arts, 10, request=request)
         articles = p.page(page)
 
         return render(request, 'search.html', {
@@ -219,6 +238,7 @@ class Search(View):
             'articles': articles,
             'all_tags': all_tags,
             'search_keyword': search_keyword,
+            'columns': columns
         })
 
 

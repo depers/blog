@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title %}
-    <title>博客存档</title>
+    <title>博客专栏</title>
 {% endblock %}
 {% block headInfo %}
     <div class="blog-header">
@@ -12,12 +12,11 @@
 {% endblock %}
 {% block col-8 %}
     <div class="col-md-8">
-        {% for foo in  articles.object_list %}
+        {% for foo in  columnList.object_list %}
             <div class="col-md-12">
-                <div class="blog-post">
-                    <h4 class="blog-post-meta"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>&nbsp;&nbsp;{{ foo.date }} by <a>{{ foo.author }}</a></h4>
-                    <h3 class="blog-post-title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{% url 'art' foo.id %}">{{ foo.title }}</a></h3>
-                    <hr>
+                <div class="bs-callout bs-callout-info">
+                    <h4><a href="{% url 'colArticle' foo.id %}">{{ foo.name }}</a></h4>
+                    <p>{{ foo.overView }}</p>
                 </div>
             </div>
         {% endfor %}
@@ -25,13 +24,18 @@
             <nav aria-label="Page navigation">
                 <ul class="pagination">
                     <li class="{% if articles.has_previous %}{% else %}disabled{% endif %}" >
-                        <a href="#" aria-label="Previous">
+                        <a {% if articles.has_previous %}
+                                href="?{{ articles.previous_page_number.querystring }}"
+                              {% else %}
+                                href="javascript:void(0)"
+                              {% endif %}
+                                aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     {% for page in articles.pages %}
                         {% if page %}
-                            {% ifequal page all_orgs.number %}
+                            {% ifequal page articles.number %}
                                  <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
                              {% else %}
                                  <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
@@ -41,7 +45,12 @@
                         {% endif %}
                     {% endfor %}
                     <li class="{% if articles.has_next %}{% else %}disabled{% endif %}">
-                        <a href="#" aria-label="Next">
+                        <a {% if articles.has_next %}
+                                href="?{{ articles.next_page_number.querystring }}"
+                            {% else %}disabled
+                                href="javascript:void(0)"
+                            {% endif %}
+                        aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

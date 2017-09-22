@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/animatescroll.js' %}"></script>
+    <script type="text/javascript" src="{% static 'SyntaxHighlighter/shCore.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'SyntaxHighlighter/shCoreDefault.css' %}">
 </head>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="20" style="position: relative;">
 <nav class="navbar navbar-default">
@@ -41,8 +43,8 @@
                     <li class="{% if request.path|slice:'11' == '/blog/Home/' %}active{% endif %}">
                         <a href="{% url 'index' %}">Home</a>
                     </li>
-                    <li class="{% if request.path|slice:'14' == '/blog/Archive/' %}active{% endif %}">
-                        <a href="{% url 'archive' %}">Archive</a>
+                    <li class="{% if request.path|slice:'14' == '/blog/Columns/' %}active{% endif %}">
+                        <a href="{% url 'column' %}">Archive</a>
                     </li>
                     <li class="{% if request.path|slice:'11' == '/blog/Tags/' %}active{% endif %}">
                         <a href="{% url 'tag' %}">Tags</a>
@@ -60,31 +62,20 @@
 <div class="container">
     <div class="blog-header">
         <h1 class="blog-title">{{ art.title }}
-            <span class="badge badge-2">{% if tags %}{{ tags.tag }}{% endif %}</span>
-            <span class="badge badge-2">{% if tags %}{{ tags.tag_2 }}{% endif %}</span>
-            <span class="badge badge-2">{% if tags %}{{ tags.tag_3 }}{% endif %}</span>
+            {% for tag in tags %}
+                <span class="badge badge-2">{% if tag %}{{ tag.tag }}{% endif %}</span>
+            {% endfor %}
         </h1>
         <h4 class="blog-post-meta"><span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>&nbsp;&nbsp;{{ art.date }} by <a>{{ art.author }}</a></h4>
         <hr>
     </div>
     <div class="row">
-        <div class="col-md-9">
-            <div class="col-md-12">
-                <div class="blog-post">
-                    {% autoescape off %}
-                    {{ art.garagraph }}
-                    {% endautoescape %}
-                </div>
+        <div class="col-md-12">
+            <div class="blog-post">
+                {% autoescape off %}
+                {{ art.garagraph }}
+                {% endautoescape %}
             </div>
-        </div>
-        <div class="col-md-3 src-list" id="myScrollspy">
-            <ul class="nav nav-pills nav-stacked" role="tablist">
-                <li class="li">CATALOG</li>
-                <hr>
-                {% for gra in gra_title %}
-                <li class="gra-title" id="li-{{ forloop.counter }}"><a href="" class="gra-a">{{ gra }}</a></li>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 </div>
@@ -97,30 +88,9 @@
     </div>
 
 </div>
-<script>
-{#        var gra = $('.gra-title');#}
-{#        var gra_len = gra.length;#}
-{#        for(var i = 0; i < gra_len; i++){#}
-{##}
-{#        }#}
-{#        var gra_a = $('.gra-a');#}
-{#        var strs = [];#}
-{#        for(var i = 0; i < gra_len; i++) {#}
-{#            if (i == i) {#}
-{#                gra_a.eq(i).attr('href', "#" + gra_a.eq(i).text().toString().replace('、', '-'));#}
-{#                strs.push(gra_a.eq(i).text().toString().replace('、', '-'))#}
-{#            }#}
-{#        }#}
-{#        {% for hre in href %}#}
-{#        $('#li-{{ forloop.counter }}').click(function () {#}
-{#            alert('hello');#}
-{#            $('#{{ hre }}').animatescroll({#}
-{#                    scrollSpeed: 2000,#}
-{#                    easing: 'easeOutBounce',#}
-{#                    padding: 20#}
-{#                });#}
-{#        });#}
-{#        {% endfor %}#}
+
+<script type="text/javascript">
+    SyntaxHighlighter.highlight();
 </script>
 
 

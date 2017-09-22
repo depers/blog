@@ -2,24 +2,17 @@
 {% load staticfiles %}
 
 {% block title %}
-    <title>博客标签</title>
+    <title>博客专栏-{{ column.name }}</title>
 {% endblock %}
 {% block headInfo %}
     <div class="blog-header">
-        <h1 class="blog-title">Tags Blog<span class="badge badge-2">{{ num }}</span></h1>
+        <h1 class="blog-title">{{ column.name }}<span class="badge badge-2">{{ num }}</span></h1>
+        <p>{{ column.overView }}</p>
         <hr>
     </div>
 {% endblock %}
 {% block col-8 %}
     <div class="col-md-8">
-            <div class="col-md-12">
-                <div class="blog-post">
-                    <a href="?tag=" class="label-2 {% ifequal tagc '' %}label-active{% endifequal %}"><span class="label label-default">全部显示</span></a>
-                    {% for tag in tags %}
-                    <a href="?tag={{ tag.id }}" class="label-2 {% ifequal tagc.id tag.id %}label-active{% endifequal %}"><span class="label label-default">{{ tag.tag }}</span></a>
-                    {% endfor %}
-                </div>
-            </div>
             {% for art in articles.object_list %}
             <div class="col-md-12">
                 <div class="blog-post">

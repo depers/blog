@@ -29,7 +29,6 @@
     margin-left: 7.5%;
     margin-top: 7%;
     border: none;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.11);
 }
 .panel-body{
     padding: 7px;
@@ -96,7 +95,8 @@
 /* archive.html*/
 .badge-2{
     margin-left: 10px;
-    background-color: rgba(119, 119, 119, 0.18);
+    background-color: #f9f2f4;
+    color: #c7254e;
 }
 .overView{
     font-family: "微软雅黑";
@@ -140,4 +140,20 @@
 }
 .nav-pills>li>a{
     padding: 5px 15px;
+}
+.bs-callout{
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout-info{
+    border-left-color: #1b809e;
+}
+.bs-callout-warning {
+    border-left-color: #aa6708;
+}
+.bs-callout-danger {
+    border-left-color: #ce4844;
 }

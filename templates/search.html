@@ -33,30 +33,40 @@
             {% if articles.object_list %}
             <div class="col-md-12">
                 <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="{% if articles.has_previous %}{% else %}disabled{% endif %}" >
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% for page in articles.pages %}
-                        {% if page %}
-                            {% ifequal page all_orgs.number %}
-                                 <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
-                             {% else %}
-                                 <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
-                             {% endifequal %}
-                        {% else %}
-                             <li class="none"><a href="">...</a></li>
-                        {% endif %}
-                    {% endfor %}
-                    <li class="{% if articles.has_next %}{% else %}disabled{% endif %}">
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                    <ul class="pagination">
+                        <li class="{% if articles.has_previous %}{% else %}disabled{% endif %}" >
+                            <a {% if articles.has_previous %}
+                                    href="?{{ articles.previous_page_number.querystring }}"
+                                  {% else %}
+                                    href="javascript:void(0)"
+                                  {% endif %}
+                                    aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% for page in articles.pages %}
+                            {% if page %}
+                                {% ifequal page articles.number %}
+                                     <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                 {% else %}
+                                     <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                                 {% endifequal %}
+                            {% else %}
+                                 <li class="none"><a href="">...</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        <li class="{% if articles.has_next %}{% else %}disabled{% endif %}">
+                            <a {% if articles.has_next %}
+                                    href="?{{ articles.next_page_number.querystring }}"
+                                {% else %}disabled
+                                    href="javascript:void(0)"
+                                {% endif %}
+                            aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             {% endif %}
         </div>

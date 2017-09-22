@@ -1,4 +1,4 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {% load staticfiles %}
 
 {% block title %}
@@ -6,9 +6,9 @@
 {% endblock %}
 {% block headInfo %}
     <div class="blog-header">
-    {% autoescape off %}
+        {% autoescape off %}
             <p class="lead blog-description">{{ headInfo.content }}</p>
-    {% endautoescape %}
+        {% endautoescape %}
     </div>
 {% endblock %}
 {% block col-8 %}
@@ -26,10 +26,43 @@
         <div class="col-md-12">
             <nav aria-label="...">
                 <ul class="pager">
-                    <li class="previous {% if articles.has_previous %}{% else %}disabled{% endif %}"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
-                    <li class="next {% if articles.has_next %}{% else %}disabled{% endif %}"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                    <li class="previous {% if articles.has_previous %}{% else %}disabled{% endif %}">
+                        <a href="javascript:void(0)" {% if articles.has_previous %}onclick="previous()"{% endif %}><span
+                                aria-hidden="true">&larr;</span>Newer </a>
+                    </li>
+                    <li class="next {% if articles.has_next %}{% else %}disabled{% endif %}">
+                        <a href="javascript:void(0)" {% if articles.has_next %}onclick="next()"{% endif %}> Older<span
+                                aria-hidden="true">&rarr;</span></a>
+                    </li>
                 </ul>
             </nav>
         </div>
     </div>
+    <script>
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+        }
+
+        function next() {
+            var page = getQueryString('page')
+            if (page == null){
+                page = 1
+            }
+            page = parseInt(page) + 1;
+            location.href = '/blog/Home/?page=' + page;
+        }
+        function previous() {
+            var page = getQueryString('page')
+            if (page == null){
+                page = 1
+            }
+            page = parseInt(page) - 1;
+            location.href = '/blog/Home/?page=' + page;
+        }
+    </script>
 {% endblock %}
+
+

@@ -4,12 +4,14 @@ __date__ = '2017/2/18 14:23'
 
 from django.conf.urls import url
 
-from views import ArtHome, Archive, Tag, Art, About, Friend, Search
+from views import ArtHome, Columns, Tag, Art, About, Friend, Search, ColumnArticle
 
 urlpatterns = [
     url(r'^Home/$', ArtHome.as_view(), name='index'),
 
-    url(r'^Archive/$', Archive.as_view(), name='archive'),
+    url(r'^Column/$', Columns.as_view(), name='column'),
+
+    url(r'^ColArticle/(?P<cId>\d+)/$', ColumnArticle.as_view(), name='colArticle'),
 
     url(r'^Tags/$', Tag.as_view(), name='tag'),
 
