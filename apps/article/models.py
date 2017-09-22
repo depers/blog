@@ -32,7 +32,7 @@ class Article(models.Model):
     author = models.CharField(max_length=20, default='', verbose_name='作者')
     chickRate = models.IntegerField(default=0, verbose_name='点击率')
     overView = models.TextField(verbose_name="文章概述", default='')
-    garagraph = UEditorField(verbose_name='段落文章', width=1200, height=300, imagePath="article/ueditor/",
+    garagraph = UEditorField(verbose_name='段落文章', width=950, height=300, imagePath="article/ueditor/",
                           filePath="article/ueditor/", default='')
     passed = models.BooleanField(verbose_name="是否审核通过", default=False)
 

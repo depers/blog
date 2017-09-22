@@ -44,7 +44,7 @@
                         <a href="{% url 'index' %}">Home</a>
                     </li>
                     <li class="{% if request.path|slice:'14' == '/blog/Columns/' %}active{% endif %}">
-                        <a href="{% url 'column' %}">Archive</a>
+                        <a href="{% url 'column' %}">Column</a>
                     </li>
                     <li class="{% if request.path|slice:'11' == '/blog/Tags/' %}active{% endif %}">
                         <a href="{% url 'tag' %}">Tags</a>

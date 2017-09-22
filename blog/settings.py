@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Django settings for blog project.
 
@@ -26,7 +27,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 SECRET_KEY = 'j2m$a^6=vc#c=$xd%(ct$aoe$^fewl_z4u-3&4)ceg=+6xlkdh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -89,7 +90,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blog',
         'USER': 'root',
-        'PASSWORD': 'fx1212',
+        'PASSWORD': 'MyNewfx7!',
+        # 'PASSWORD': 'fx1212',
         'host': '127.0.0.1',
     }
 }
@@ -132,12 +134,13 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+# 正式发布时注释这串代码
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# 正式发布时这串代码去掉注释
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
