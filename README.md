@@ -1,4 +1,4 @@
-#My Blog site
+# My Blog site
 > 下面我来简单的介绍一下我的这个博客系统，主要由前台展示系统和后台编辑系统组成。整个系统采用python2.7环境下的Django1.9.8，界面布局使用的是Bootstrap3。后台实现是Django的Xadmin。
 
 ## 一、前台概览
