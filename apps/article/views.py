@@ -17,7 +17,8 @@ class ArtHome(View):
         columns = Column.objects.all().order_by('date')
         headInfo = HeadInfo.objects.filter(page='home').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
-        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        tags = Tags.objects.all().raw('SELECT * FROM `article_tags` GROUP BY tag collate '
+                                      + 'utf8_bin ORDER BY SUM(chickRate) DESC;')[:25]
         user = UserProfile.objects.get(username='fengxiao')
 
 
@@ -48,7 +49,8 @@ class Columns(View):
         if headInfo:
             headInfo = HeadInfo.objects.filter(page='column').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
-        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        tags = Tags.objects.all().raw('SELECT * FROM `article_tags` GROUP BY tag collate '
+                                      + 'utf8_bin ORDER BY SUM(chickRate) DESC;')[:25]
         user = UserProfile.objects.get(username='fengxiao')
         artNum = columns.all().count()
 
@@ -79,7 +81,8 @@ class ColumnArticle(View):
         columns = Column.objects.all().order_by('date')
         column = Column.objects.get(id=cId)
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
-        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        tags = Tags.objects.all().raw('SELECT * FROM `article_tags` GROUP BY tag collate '
+                                      + 'utf8_bin ORDER BY SUM(chickRate) DESC;')[:25]
         user = UserProfile.objects.get(username='fengxiao')
         artNum = article.all().count()
 
@@ -109,8 +112,8 @@ class Tag(View):
 
         tag = request.GET.get('tag', '')
         if tag:
-            article = Article.objects.filter(passed=True, tags=int(tag)).order_by('-date')
             tag = Tags.objects.get(id=int(tag))
+            article = Article.objects.filter(passed=True, tags=int(tag)).order_by('-date')
             tag.chickRate += 1
             tag.save()
         else:
@@ -120,7 +123,8 @@ class Tag(View):
             headInfo = HeadInfo.objects.filter(page='column').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
         columns = Column.objects.all().order_by('date')
-        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        tags = Tags.objects.all().raw('SELECT * FROM `article_tags` GROUP BY tag collate '
+                                      + 'utf8_bin ORDER BY SUM(chickRate) DESC;')[:25]
         user = UserProfile.objects.get(username='fengxiao')
         artNum = article.all().count()
 
@@ -169,7 +173,8 @@ class About(View):
             headInfo = HeadInfo.objects.filter(page='column').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
         columns = Column.objects.all().order_by('date')
-        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        tags = Tags.objects.all().raw('SELECT * FROM `article_tags` GROUP BY tag collate '
+                                      + 'utf8_bin ORDER BY SUM(chickRate) DESC;')[:25]
         user = UserProfile.objects.get(username='fengxiao')
 
         return render(request, 'about.html', {
@@ -192,7 +197,8 @@ class Friend(View):
             headInfo = HeadInfo.objects.filter(page='column').order_by('-date')[0]
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
         columns = Column.objects.all().order_by('date')
-        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        tags = Tags.objects.all().raw('SELECT * FROM `article_tags` GROUP BY tag collate '
+                                      + 'utf8_bin ORDER BY SUM(chickRate) DESC;')[:25]
         user = UserProfile.objects.get(username='fengxiao')
 
         return render(request, 'friend.html', {
@@ -212,7 +218,8 @@ class Search(View):
         search_keyword = ''
         hotArts = Article.objects.filter(passed=True).order_by('-chickRate')[:7]
         columns = Column.objects.all().order_by('date')
-        tags = Tags.objects.all().order_by('-chickRate')[:25]
+        tags = Tags.objects.all().raw('SELECT * FROM `article_tags` GROUP BY tag collate '
+                                      + 'utf8_bin ORDER BY SUM(chickRate) DESC;')[:25]
         user = UserProfile.objects.get(username='fengxiao')
 
         search_keyword = request.GET.get('keywords', '')
