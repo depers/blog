@@ -13,7 +13,7 @@
 
 ## 组织结构
 blog    
-|-- apps 编写业务逻辑   
+|--apps 编写业务逻辑   
 |--blog 项目配置   
 |--extra_apps Xadmin文件    
 |--media 存放上传的多媒体文件    
