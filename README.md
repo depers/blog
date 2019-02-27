@@ -12,7 +12,7 @@
 ![后台演示](/resource/two.gif)
 
 ## 组织结构
-blog
+blog    
 |-- apps 编写业务逻辑   
 |--blog 项目配置   
 |--extra_apps Xadmin文件    
