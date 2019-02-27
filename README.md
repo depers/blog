@@ -81,9 +81,9 @@ blog
 
 - 拉取所有需要的static file 到同一个目录
 
-  - 在django的setting文件中，添加下面一行内容：
+  - 在django的setting.py文件中，添加下面一行内容：
 
-    STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+    ```STATIC_ROOT = os.path.join(BASE_DIR, "static/")```
 
   - 运行命令
     `python manage.py collectstatic`
