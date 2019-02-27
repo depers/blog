@@ -1,26 +1,24 @@
 # blog
-
-## 项目介绍
 这是我大二时写的博客系统，那个时候一心想做一个网站，但是苦于Python Web相关的中文教程特别少，所以系统的功能做的都比较简单。该博客系统主要由前台展示系统和后台编辑系统组成。整个系统采用Python的web框架[Django](https://www.djangoproject.com/)+[Xadmin](https://github.com/sshwsfc/xadmin)的组合开发，界面布局风格使用的是[Bootstrap3](http://www.bootcss.com/)。
 
 ## 项目演示
 ### 系统前台
 项目演示地址：[http://www.bravedawn.cn/blog/Home/](http://www.bravedawn.cn/blog/Home/)
 
-![](http://tianxianyigou.bravedawn.cn/PowerBase/userfiles/files/one.gif)
+![前台演示](/resource/one.gif)
 
 ### 系统后台
 
-![](http://tianxianyigou.bravedawn.cn/PowerBase/userfiles/files/two.gif)
+![后台演示](/resource/two.gif)
 
 ## 组织结构
 blog
-|-- apps 编写业务逻辑
-|--blog 项目配置
-|--extra_apps Xadmin文件
-|--media 存放上传的多媒体文件
-|--static 静态文件
-|--templates 网页网页模板
+|-- apps 编写业务逻辑   
+|--blog 项目配置   
+|--extra_apps Xadmin文件    
+|--media 存放上传的多媒体文件    
+|--static 静态文件     
+|--templates 网页网页模板     
 
 ## 相关技术
 |技术|说明|官网|
